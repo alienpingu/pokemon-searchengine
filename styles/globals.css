@@ -13,3 +13,7 @@
 
 @tailwind components;
 @tailwind utilities;
+
+input:focus {
+  color: white !important;
+}

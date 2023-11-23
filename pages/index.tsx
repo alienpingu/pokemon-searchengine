@@ -20,7 +20,7 @@ export default function Home() {
   const searchHandler = (query: String) => {
     if (query.length > 0) {
       axios
-        .get(`/api/search/${query}`)
+        .get(`/api/search/${query.toLowerCase()}`)
         .then((response) => setGridProps({pokemons: response.data}))
         .catch((error) => console.log(error));
     } else {
@@ -32,7 +32,7 @@ export default function Home() {
   }
 
   return (
-    <main className={`flex min-h-screen flex-col items-center p-24 ${inter.className}`}>
+    <main className={`flex min-h-screen flex-col items-center p-8 md:p-24 ${inter.className}`}>
      <SearchBasicExample searchHandler={searchHandler}/>
      {(gridProps.pokemons.length) ? <Grid {...gridProps}/> : 'Loading...'}
     </main>

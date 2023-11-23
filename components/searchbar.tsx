@@ -5,7 +5,7 @@ export default function SearchBasicExample({searchHandler}:any): JSX.Element {
     const [query, setQuery] = useState('')
 
     return (
-            <div className="mb-3 md:w-96">
+            <div className="mb-3 w-full">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
                     <input
                         type="search"
