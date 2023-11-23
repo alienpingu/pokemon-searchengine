@@ -1,8 +1,9 @@
 import csv from 'csvtojson';
-
-const path = 'public/pokemon.csv';
+import path from 'path'
+const filePath = 'public/pokemon.csv';
 
 export default async function getJsonFromCSV() {
-        var data = await csv().fromFile(path);
+        console.log(path.resolve(filePath));
+        var data = await csv().fromFile(path.resolve(filePath));
         return data;
 }
