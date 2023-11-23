@@ -14,7 +14,10 @@ export default function SearchBasicExample({searchHandler}:any): JSX.Element {
                         aria-label="Search"
                         aria-describedby="button-addon1"
                         value={query}
-                        onChange={(event) => setQuery(event.target.value)}
+                        onChange={(event) => {
+                            setQuery(event.target.value);
+                            setInterval(searchHandler(query),500);
+                        }}
                     />
 
                     {/* <!--Search button--> */}
