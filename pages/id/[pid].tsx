@@ -54,6 +54,6 @@ export default function PokemonInfo() {
                     <Link href="/" className='bg-[#1c4587] p-2 rounded-md'>
                         Return to home
                     </Link>
-            </main>) : <Spinner/>}
+            </main>) : <div className='flex w-full min-h-screen justify-center items-center bg-slate-800'><Spinner/></div>}
     </>)
 }
