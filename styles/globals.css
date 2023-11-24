@@ -1,19 +1,7 @@
-@tailwind base;
+@import url('./spinner.css');
 
-@layer base {
-  html {
-    @apply text-neutral-800;
-  }
-  html {
-    @apply text-neutral-50;
-    @apply bg-neutral-800;
-  }
-  
-}
+@tailwind base;
 
 @tailwind components;
 @tailwind utilities;
 
-input:focus {
-  color: white !important;
-}

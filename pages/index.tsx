@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
-
+import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import SearchBasicExample from '@/components/searchbar'
 import Grid from '@/components/grid'
-
+import Spinner from '@/components/spinner';
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
@@ -32,9 +32,16 @@ export default function Home() {
   }
 
   return (
-    <main className={`flex min-h-screen flex-col items-center p-8 md:p-24 ${inter.className}`}>
+    <main className={`flex min-h-screen flex-col items-center p-8 md:p-24 bg-slate-800 ${inter.className}`}>
+     <Image
+      src="/logo-white.png"
+      alt="PokeSearch"
+      width={500}
+      height={500}
+	    quality={100}
+      className='mb-5'/>
      <SearchBasicExample searchHandler={searchHandler}/>
-     {(gridProps.pokemons.length) ? <Grid {...gridProps}/> : 'Loading...'}
+     {(gridProps.pokemons.length) ? <Grid {...gridProps}/> : <div className='mt-5'><Spinner /></div>}
     </main>
   )
 }

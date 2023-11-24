@@ -4,72 +4,52 @@ import Link from "next/link";
 import { useRouter } from 'next/router';
 import { Inter } from 'next/font/google'
 import Pokemon from '@/interfaces/pokemon';
-
+import Spinner from '@/components/spinner';
 const inter = Inter({ subsets: ['latin'] })
 
 export default function PokemonInfo() {
 
     const [pokemon, setPokemon] = useState<Pokemon | null>(null)
-    const router = useRouter()
-    const pid = router.query.pid
-
+    const router = useRouter();
+    const id = router.query.pid;
     useEffect(() => {
-        axios
-          .get(`/api/id/${pid}`)
-          .then((response) => setPokemon(response.data))
-          .catch((error) => console.log(error));
-    },[]);
+          if(!id) {
+            return;
+          }
+          axios
+            .get(`/api/id/${router.query.pid}`)
+            .then((response) => setPokemon(response.data))
+            .catch((error) => console.log(error));
+        }, [id]);
 
     return(<>
          
 
             {(pokemon) ? ( <main
             className={`flex flex-col items-center justify-between ${inter.className}`}>
-                <h1 className='text-4xl mb-5' style={{"color": pokemon['COLOR'].toLowerCase()}}>{pokemon['NAME']}</h1>
-                <div className="grid mb-8 md:grid-cols-2 bg-white dark:bg-gray-800">
-                <figure className="flex flex-col items-center justify-center p-4 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-ss-lg md:border-e dark:bg-gray-800 dark:border-gray-700">
-                    <div className="flex flex-col items-center justify-center ">
-                        <p>NUMBER: {pokemon['NUMBER']}</p>
-                        <p>CODE: {pokemon['CODE']}</p>
-                        <p>SERIAL: {pokemon['SERIAL']}</p>
-                        <p>GENERATION: {pokemon['GENERATION']}</p>
-                        <p>TYPE1: {pokemon['TYPE1']}</p>
-                        <p>TYPE2: {pokemon['TYPE2']}</p>
-                        
+                
+                    <div className='grid grid-cols-2 gap-4 mb-2'>
+                        <span>N°: {pokemon['NUMBER']}</span>
+                        <span>CODE: {pokemon['CODE']}</span>
+                        <span>SERIAL: {pokemon['SERIAL']}</span>
+                        <span>GENERATION: {pokemon['GENERATION']}</span>
                     </div>
-                </figure>
-                <figure className="flex flex-col items-center justify-center p-4 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-ss-lg md:border-e dark:bg-gray-800 dark:border-gray-700">
-                    <div className="flex flex-col items-center justify-center ">
-                    <p>ABILITY1: {pokemon['ABILITY1']}</p>
-                    <p>ABILITY2: {pokemon['ABILITY2']}</p>
-                    <p>ABILITY HIDDEN: {pokemon['ABILITY HIDDEN']}</p>
-                    </div>
-                </figure>
-                <figure className="flex flex-col items-center justify-center p-4 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-ss-lg md:border-e dark:bg-gray-800 dark:border-gray-700">
-                    <div className="flex flex-col items-center justify-center ">
-                    <p>LEGENDARY: {pokemon['LEGENDARY']}</p>
-                    <p>MEGA_EVOLUTION: {pokemon['MEGA_EVOLUTION']}</p>
-
-                    <p>HEIGHT: {pokemon['HEIGHT']}</p>
-                    <p>WEIGHT: {pokemon['WEIGHT']}</p>
-                    </div>
-                </figure>
-                <figure className="flex flex-col items-center justify-center p-4 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-ss-lg md:border-e dark:bg-gray-800 dark:border-gray-700">
-                    <div className="flex flex-col items-center justify-center ">
-                    <p>HP: {pokemon['HP']}</p>
-                    <p>ATK: {pokemon['ATK']}</p>
-                    <p>DEF: {pokemon['DEF']}</p>
-                    <p>SP_ATK: {pokemon['SP_ATK']}</p>
-                    <p>SP_DEF: {pokemon['SP_DEF']}</p>
-                    <p>SPD: {pokemon['SPD']}</p>
+                    
+                    <h1 className='text-4xl mb-5'>{pokemon['NAME']}</h1>
+                    <span>{(pokemon['LEGENDARY'] !== '0') ? 'Legendary' : null} {(pokemon['MEGA_EVOLUTION'] !== '0') ? 'MEGA' : null}</span>
+                    <span>{pokemon['TYPE1']} {(pokemon['TYPE2']) ? " - "+pokemon['TYPE2'] : null}</span>
+                    <span>{pokemon['ABILITY1']} {(pokemon['ABILITY2']) ? " - "+pokemon['ABILITY2'] : null}{(pokemon['ABILITY HIDDEN']) ? '['+pokemon['ABILITY HIDDEN']+']' : null }</span>
+                    <p>HEIGHT: {pokemon['HEIGHT']} | WEIGHT: {pokemon['WEIGHT']}</p>
+                    <br />
+                    <p>HP: {pokemon['HP']} SPD: {pokemon['SPD']} </p>
+                    <p>ATK: {pokemon['ATK']} SP_ATK: {pokemon['SP_ATK']}</p>
+                    <p>DEF: {pokemon['DEF']} SP_DEF: {pokemon['SP_DEF']}</p>
                     <p>TOTAL: {pokemon['TOTAL']}</p>
-                    </div>
-                </figure>
-            </div>
-            <Link href="/">
-                Return to home
-            </Link>
-        </main>
-            ) : 'Loading'}
+                    <br />
+
+                    <Link href="/">
+                        Return to home
+                    </Link>
+            </main>) : <Spinner/>}
     </>)
 }
