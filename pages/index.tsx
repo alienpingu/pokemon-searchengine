@@ -10,6 +10,7 @@ const inter = Inter({ subsets: ['latin'] })
 export default function Home() {
   const [gridProps, setGridProps] = useState({ pokemons: []})
 
+
   useEffect(() => {
     axios
       .get('/api/all')
@@ -41,7 +42,7 @@ export default function Home() {
 	    quality={100}
       className='mb-5'/>
      <SearchBasicExample searchHandler={searchHandler}/>
-     {(gridProps.pokemons.length) ? <Grid {...gridProps}/> : <div className='mt-5'><Spinner /></div>}
+     {(gridProps.pokemons.length) ? <Grid {...gridProps} /> : <div className='mt-5'><Spinner /></div>}
     </main>
   )
 }
