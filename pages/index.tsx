@@ -2,34 +2,48 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
-import SearchBasicExample from '@/components/searchbar'
+import Searchbar from '@/components/searchbar'
 import Grid from '@/components/grid'
 import Spinner from '@/components/spinner';
+import {useSelector,useDispatch} from 'react-redux'
+import {saveGrid} from '@/slices/actualSlice';
+
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  const [gridProps, setGridProps] = useState({ pokemons: []})
-
+  const [loaded, setLoaded] = useState(true)
+  const actual = useSelector((state: any) => state.actual)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    axios
-      .get('/api/all')
-      .then((response) => setGridProps({pokemons: response.data}))
-      .catch((error) => console.log(error));
-  },[]);
-
-  const searchHandler = (query: String) => {
-    if (query.length > 0) {
+    if (actual.grid.length > 0) {
+      return;
+    } else {
+      setLoaded(false);
       axios
-        .get(`/api/search/${query.toLowerCase()}`)
-        .then((response) => setGridProps({pokemons: response.data}))
+        .get('/api/all')
+        .then((response) => {
+          dispatch(saveGrid(response.data))
+          setLoaded(true);
+        })
+        .catch((error) => console.log(error));
+    }
+  },[actual.grid]);
+
+  const searchHandler = () => {
+    setLoaded(false);
+    if (actual.query.length > 0) {
+      axios
+        .get(`/api/search/${actual.query.toLowerCase()}`)
+        .then((response) => dispatch(saveGrid(response.data)))
         .catch((error) => console.log(error));
     } else {
       axios
         .get(`/api/all`)
-        .then((response) => setGridProps({pokemons: response.data}))
+        .then((response) => dispatch(saveGrid(response.data)))
         .catch((error) => console.log(error));
     }
+    setLoaded(true);
   }
 
   return (
@@ -41,8 +55,8 @@ export default function Home() {
       height={500}
 	    quality={100}
       className='mb-5'/>
-     <SearchBasicExample searchHandler={searchHandler}/>
-     {(gridProps.pokemons.length) ? <Grid {...gridProps} /> : <div className='mt-5'><Spinner /></div>}
+     <Searchbar searchHandler={searchHandler}/>
+     {(loaded) ? <Grid /> : <div className='mt-5'><Spinner /></div>}
     </main>
   )
 }

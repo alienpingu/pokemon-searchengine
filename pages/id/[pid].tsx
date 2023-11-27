@@ -11,20 +11,18 @@ export default function PokemonInfo() {
     const dispatch = useDispatch()
     const router = useRouter();
     const id = router.query.pid;
+
     useEffect(() => {
-            if (actual.pokemon) {
-                return;
-            } else if (!id) {
-                return;
-            } else {
-                axios
-                .get(`/api/id/${router.query.pid}`)
-                .then((response) => {
-                    dispatch(loadPokemon(response.data))
-                })
-                .catch((error) => console.log(error));
-            }
-        }, []);
+        if (actual.pokemon.SERIAL) {
+            return;
+        }
+        axios
+            .get(`/api/id/${router.query.pid}`)
+            .then((response) => {
+                dispatch(loadPokemon(response.data))
+            })
+            .catch((error) => console.log(error));
+        }, [id]);
 
     return(<>
             {(actual.pokemon) ? ( <main className='flex flex-col justify-center items-center bg-slate-800 text-neutral-50 min-h-screen  p-4 md:p-24 '>

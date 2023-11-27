@@ -1,8 +1,10 @@
 import React,{useState} from 'react';
+import {useSelector,useDispatch} from 'react-redux'
+import {saveQuery} from '@/slices/actualSlice';
+export default function Searchbar({searchHandler}:any): JSX.Element {
 
-export default function SearchBasicExample({searchHandler}:any): JSX.Element {
-
-    const [query, setQuery] = useState('')
+    const actual = useSelector((state: any) => state.actual)
+    const dispatch = useDispatch()
 
     return (
             <div className="mb-3 w-full">
@@ -13,10 +15,10 @@ export default function SearchBasicExample({searchHandler}:any): JSX.Element {
                         placeholder="Search"
                         aria-label="Search"
                         aria-describedby="button-addon1"
-                        value={query}
+                        value={actual.query}
                         onChange={(event) => {
-                            setQuery(event.target.value);
-                            setInterval(searchHandler(query),500);
+                            dispatch(saveQuery(event.target.value));
+                            setInterval(searchHandler(), 500)
                         }}
                     />
 
@@ -25,7 +27,7 @@ export default function SearchBasicExample({searchHandler}:any): JSX.Element {
                         className="relative z-[2] flex items-center rounded-r bg-[#1c4587] px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
                         type="button"
                         id="button-addon1"
-                        onClick={() => searchHandler(query)}>
+                        onClick={() => searchHandler()}>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
