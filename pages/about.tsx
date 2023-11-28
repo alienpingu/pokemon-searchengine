@@ -11,6 +11,9 @@ export default function About() {
             <h1>About</h1>
             <div>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa assumenda odio quis consectetur, aliquid quidem modi doloremque sint? Facilis fugiat eveniet, quasi veniam quo tenetur neque explicabo doloribus deleniti! Libero!</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa assumenda odio quis consectetur, aliquid quidem modi doloremque sint? Facilis fugiat eveniet, quasi veniam quo tenetur neque explicabo doloribus deleniti! Libero!</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa assumenda odio quis consectetur, aliquid quidem modi doloremque sint? Facilis fugiat eveniet, quasi veniam quo tenetur neque explicabo doloribus deleniti! Libero!</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa assumenda odio quis consectetur, aliquid quidem modi doloremque sint? Facilis fugiat eveniet, quasi veniam quo tenetur neque explicabo doloribus deleniti! Libero!</p>
             </div>
 
             <Link href="/">
