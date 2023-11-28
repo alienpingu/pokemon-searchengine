@@ -33,7 +33,13 @@ export default function PokemonInfo() {
                             <span>SERIAL: {actual.pokemon['SERIAL']}</span>
                             <span>GENERATION: {actual.pokemon['GENERATION']}</span>
                         </div>
-                        
+                        <div className='flex w-full justify-center'>
+                        <img 
+                            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${actual.pokemon['NUMBER']}.png`} 
+                            alt={`${actual.pokemon['NAME']} front view`} 
+                            width={200}
+                            height={200}/>
+                        </div>
                         <h1 className={`text-4xl mb-5 text-center`}>{actual.pokemon['NAME']}</h1>
                         <p className='text-center text-red-600'>{(actual.pokemon['LEGENDARY'] !== '0') ? 'Legendary' : null} {(actual.pokemon['MEGA_EVOLUTION'] !== '0') ? 'MEGA' : null}</p>
                         <p className='text-center'>{actual.pokemon['TYPE1']} {(actual.pokemon['TYPE2']) ? " - "+actual.pokemon['TYPE2'] : null}</p>
